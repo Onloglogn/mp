@@ -16,13 +16,14 @@ app.use('/', express.static(path.join(__dirname, 'views')))
 app.use(bodyParser.json())
 app.post('/api/login', async(req, res) => {
 	const {user, pswd} = req.body
-	
-	const user = await User.findOne({user}).lean()
-	if (!user){
+	const userx = await User.findOne({username:user}).lean()
+	if (!userx){
+		console.log("User not found")
 		return res.json({status:'error', error:'invalid username or password'})
 	}
-	if (await bcrypt.compare(pswd, user.password)){
-		
+	if (await bcrypt.compare(pswd, userx.password)){
+		console.log("YES")
+		return res.json({status:'ok'})
 	}
 	res.json({status:'ok'})
 })
