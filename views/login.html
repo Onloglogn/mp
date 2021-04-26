@@ -1,0 +1,30 @@
+<html>
+	<body>
+		<h1>Login</h1>
+		<form id="login">
+			<input type="text" id="user" placeholder="username"/>
+			<input type="password" id="pswd" placeholder="password"/>
+			<input type="submit" value="Submit Form"/>
+		</form>
+		<script>
+			const form = document.getElementById("login")
+			form.addEventListener('submit', log)
+			async function log(event){
+				event.preventDefault()
+				const user = document.getElementById('user').value
+				const pswd = document.getElementById('pswd').value
+				const result = await fetch('api/login', {
+					method:'POST',
+					headers: {
+						'Content-Type':'application/json'
+					},
+					body: JSON.stringify({
+						user,
+						pswd
+					})
+				}).then((res) => res.json())
+				console.log(result)
+			}
+		</script>
+	</body>
+</html>
